@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://professorlab.co'),
   title: {
-    default: "ProfessorLab | Engineering Intelligence - AI Solutions, Mobile & Web Apps",
+    default: "ProfessorLab | Engineering Intelligence",
     template: "%s | ProfessorLab"
   },
   description: "ProfessorLab is a leading Engineering Intelligence company focused on delivering AI Solutions, iOS Apps, Android Apps, Web Apps, and Enterprise AI products. We build top-class apps with the best user experience, serving both B2C and B2B markets.",
