@@ -14,8 +14,21 @@ const SESSION_COOKIE = "admin_session";
 const isKVConfigured = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN;
 const LOCAL_DB_PATH = path.join(process.cwd(), "db_submissions.json");
 
+export interface Submission {
+    id: string;
+    type: "inquiry" | "booking";
+    email: string;
+    createdAt: string;
+    inquiry?: string;
+    name?: string;
+    phone?: string;
+    softwareType?: string;
+    description?: string;
+    [key: string]: any; // Allow for other metadata if needed
+}
+
 // Helper for local storage
-function getLocalSubmissions() {
+function getLocalSubmissions(): Submission[] {
     if (!fs.existsSync(LOCAL_DB_PATH)) return [];
     try {
         const data = fs.readFileSync(LOCAL_DB_PATH, "utf-8");
@@ -25,7 +38,7 @@ function getLocalSubmissions() {
     }
 }
 
-function saveLocalSubmissions(subs: any[]) {
+function saveLocalSubmissions(subs: Submission[]) {
     try {
         fs.writeFileSync(LOCAL_DB_PATH, JSON.stringify(subs, null, 2));
     } catch (e) {
@@ -65,7 +78,7 @@ export async function isAuthenticated() {
 export async function saveInquiry(data: { email: string; inquiry: string }) {
     try {
         const id = Date.now().toString();
-        const submission = {
+        const submission: Submission = {
             id,
             type: "inquiry",
             ...data,
@@ -98,7 +111,7 @@ export async function saveBooking(data: {
 }) {
     try {
         const id = Date.now().toString();
-        const submission = {
+        const submission: Submission = {
             id,
             type: "booking",
             ...data,
@@ -122,14 +135,14 @@ export async function saveBooking(data: {
     }
 }
 
-export async function getSubmissions() {
+export async function getSubmissions(): Promise<Submission[]> {
     if (!(await isAuthenticated())) {
         throw new Error("Unauthorized");
     }
 
     try {
         if (isKVConfigured) {
-            const submissions = await kv.lrange("submissions", 0, -1);
+            const submissions = await kv.lrange<Submission>("submissions", 0, -1);
             return submissions;
         } else {
             return getLocalSubmissions();
@@ -147,7 +160,7 @@ export async function deleteSubmission(id: string) {
 
     try {
         if (isKVConfigured) {
-            const submissions: any[] = await kv.lrange("submissions", 0, -1);
+            const submissions = await kv.lrange<Submission>("submissions", 0, -1);
             const filtered = submissions.filter((s) => s.id !== id);
 
             await kv.del("submissions");
@@ -156,7 +169,7 @@ export async function deleteSubmission(id: string) {
             }
         } else {
             const subs = getLocalSubmissions();
-            const filtered = subs.filter(s => s.id !== id);
+            const filtered = subs.filter((s) => s.id !== id);
             saveLocalSubmissions(filtered);
         }
 
