@@ -4,20 +4,22 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { BlogPost, BlogData } from '@/lib/types';
 import { getBlogDataServer } from '@/data/blog';
+import ShareButtons from '@/components/ShareButtons';
+
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
     const data = await getBlogDataServer();
     return data.posts.map((post) => ({
-        slug: post.slug,
+        id: post.id,
     }));
 }
 
 // Generate dynamic metadata for SEO
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-    const { slug } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params;
     const data = await getBlogDataServer();
-    const post = data.posts.find((p) => p.slug === slug);
+    const post = data.posts.find((p) => p.id === id);
 
     if (!post) {
         return {
@@ -45,14 +47,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
+export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const data = await getBlogDataServer();
-    const post = data.posts.find((p) => p.slug === slug);
+    const post = data.posts.find((p) => p.id === id);
 
     if (!post) {
         notFound();
     }
+
 
     return (
         <div className="blog-post-page">
@@ -95,9 +98,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <footer className="post-footer">
                         <div className="share-section">
                             <h3>শেয়ার করুন:</h3>
-                            {/* Simple share links can be added here */}
+                            <ShareButtons blogId={post.id} title={post.title} />
                         </div>
                     </footer>
+
                 </article>
             </div>
         </div>

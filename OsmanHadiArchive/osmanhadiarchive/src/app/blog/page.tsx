@@ -39,7 +39,7 @@ export default async function BlogPage() {
                 <div className="blog-grid">
                     {posts.map((post) => (
                         <article key={post.id} className="blog-card">
-                            <Link href={`/blog/${post.slug}`} target="_blank" className="blog-card-link">
+                            <Link href={`/blog/${post.id}`} className="blog-card-link">
                                 <div className="blog-card-image">
                                     <Image
                                         src={post.image}
@@ -62,6 +62,7 @@ export default async function BlogPage() {
                             </Link>
                         </article>
                     ))}
+
                 </div>
             </div>
         </div>

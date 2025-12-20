@@ -24,6 +24,10 @@ export default function Footer() {
                         এই ওয়েবসাইটে আমরা সেই সকল সাহসী মানুষদের আর্কাইভ করি যারা বাংলাদেশের জন্য জীবন উৎসর্গ করেছেন।
                         সৎ, দেশপ্রেমিক এবং নিঃস্বার্থ বীরদের স্মৃতি চিরকাল অম্লান থাকবে।
                     </p>
+                    <div className="footer-notice">
+                        <p>Support this project: <a href="https://www.facebook.com/furqanix.ans" target="_blank" rel="noopener noreferrer">You can donate domain or contact us</a></p>
+                    </div>
+
                 </div>
             </div>
         </footer>

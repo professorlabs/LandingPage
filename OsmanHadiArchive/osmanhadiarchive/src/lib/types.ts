@@ -1,6 +1,5 @@
-import { Video } from './types';
-
 // Video interface for YouTube-style video cards
+
 export interface Video {
     id: string;
     youtubeId: string;

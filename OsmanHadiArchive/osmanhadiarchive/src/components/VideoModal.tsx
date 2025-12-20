@@ -1,6 +1,4 @@
-'use client';
-
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { Video } from '@/lib/types';
 import { getRelatedVideos } from '@/data/videos';
 
@@ -22,6 +20,7 @@ function formatViews(views: number): string {
 }
 
 export default function VideoModal({ video, allVideos, onClose, onVideoSelect }: VideoModalProps) {
+    const [iframeLoaded, setIframeLoaded] = useState(false);
     const relatedVideos = getRelatedVideos(allVideos, video.id, 10);
 
     const handleEscape = useCallback((e: KeyboardEvent) => {
@@ -37,6 +36,7 @@ export default function VideoModal({ video, allVideos, onClose, onVideoSelect }:
     };
 
     useEffect(() => {
+        setIframeLoaded(false); // Reset when video changes
         document.addEventListener('keydown', handleEscape);
         document.body.style.overflow = 'hidden';
 
@@ -44,7 +44,7 @@ export default function VideoModal({ video, allVideos, onClose, onVideoSelect }:
             document.removeEventListener('keydown', handleEscape);
             document.body.style.overflow = 'unset';
         };
-    }, [handleEscape]);
+    }, [handleEscape, video.id]);
 
     return (
         <div className="video-modal-backdrop" onClick={handleBackdropClick}>
@@ -55,18 +55,26 @@ export default function VideoModal({ video, allVideos, onClose, onVideoSelect }:
                     aria-label="Close video modal"
                 >
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 6 L18 18 M18 6 L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                     </svg>
                 </button>
 
                 <div className="video-modal-content">
                     <div className="video-modal-player">
                         <div className="video-player-wrapper">
+                            {!iframeLoaded && (
+                                <div className="video-player-placeholder">
+                                    <img src={video.thumbnail} alt="" className="placeholder-image" />
+                                    <div className="loading-spinner"></div>
+                                </div>
+                            )}
                             <iframe
                                 src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
                                 title={video.title}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
+                                onLoad={() => setIframeLoaded(true)}
+                                className={iframeLoaded ? 'loaded' : ''}
                             />
                         </div>
                         <div className="video-modal-info">
@@ -79,6 +87,7 @@ export default function VideoModal({ video, allVideos, onClose, onVideoSelect }:
                     </div>
 
                     <div className="video-modal-sidebar">
+
                         <h3 className="video-modal-sidebar-title">সম্পর্কিত ভিডিও</h3>
                         <div className="video-modal-related">
                             {relatedVideos.map((relatedVideo) => (

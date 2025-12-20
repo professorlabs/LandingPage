@@ -16,8 +16,9 @@ export async function fetchVideos(): Promise<Video[]> {
         // Add thumbnail URLs from YouTube
         const videosWithThumbnails = data.videos.map(video => ({
             ...video,
-            thumbnail: video.thumbnail || `https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`
+            thumbnail: video.thumbnail || `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`
         }));
+
 
         return videosWithThumbnails;
     } catch (error) {

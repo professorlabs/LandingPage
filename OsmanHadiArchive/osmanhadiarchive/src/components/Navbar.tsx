@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 interface NavItem {
     label: string;
@@ -18,24 +17,35 @@ const navItems: NavItem[] = [
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    // Close menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node) && isMenuOpen) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        if (isMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isMenuOpen]);
+
     return (
         <nav className="navbar">
             <div className="navbar-container">
                 <Link href="/" className="navbar-brand">
-                    <div className="navbar-logo">
-                        <Image
-                            src="/osman-hadi.png"
-                            alt="Osman Hadi Logo"
-                            width={32}
-                            height={32}
-                            style={{ objectFit: 'cover', borderRadius: '50%' }}
-                        />
-                    </div>
                     <span className="navbar-title">Osman Hadi Archive</span>
                 </Link>
 
@@ -52,20 +62,35 @@ export default function Navbar() {
                     </span>
                 </button>
 
-                <ul className={`navbar-menu ${isMenuOpen ? 'open' : ''}`}>
-                    {navItems.map((item) => (
-                        <li key={item.href + item.label} className="navbar-item">
-                            <Link
-                                href={item.href}
-                                className="navbar-link"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                {item.label}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                {/* Mobile Menu Overlay */}
+                <div className={`navbar-overlay ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(false)}></div>
+
+                <div
+                    ref={menuRef}
+                    className={`navbar-menu-container ${isMenuOpen ? 'open' : ''}`}
+                >
+                    <div className="menu-header">
+                        <span className="menu-title">মেনু</span>
+                        <button className="close-menu-btn" onClick={() => setIsMenuOpen(false)} aria-label="Close menu">
+                            ✕
+                        </button>
+                    </div>
+                    <ul className="navbar-menu">
+                        {navItems.map((item) => (
+                            <li key={item.href + item.label} className="navbar-item">
+                                <Link
+                                    href={item.href}
+                                    className="navbar-link"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    {item.label}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </nav>
     );
 }
+
