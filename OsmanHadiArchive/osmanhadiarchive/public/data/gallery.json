@@ -1,0 +1,25 @@
+{
+    "videos": [
+        {
+            "id": "1",
+            "youtubeId": "9I_y6_clyS4",
+            "title": "The person can die, idea cannot die.",
+            "description": "উসমান হাদির একটি শক্তিশালী বার্তা: ব্যক্তি মরে যেতে পারে, কিন্তু আদর্শ কখনো মরে না।",
+            "views": 0,
+            "duration": "0:56"
+        },
+        {
+            "id": "2",
+            "youtubeId": "NGgD-NsjeXU",
+            "title": "Osman Hadi and his son",
+            "description": "উসমান হাদি এবং তার সন্তানের এক আবেগঘন মুহূর্ত।",
+            "views": 0,
+            "duration": "0:52"
+        }
+    ],
+    "metadata": {
+        "lastUpdated": "2025-12-20",
+        "totalVideos": 2,
+        "source": "YouTube Channel"
+    }
+}
