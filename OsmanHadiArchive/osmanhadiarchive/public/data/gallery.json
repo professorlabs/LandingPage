@@ -1,6 +1,14 @@
 {
     "videos": [
         {
+            "id": "1766333351794",
+            "youtubeId": "uAEhWV8XecU",
+            "title": "আনকাট হাদি: ওসমান হাদির অপ্রকাশিত সাক্ষাৎকার",
+            "description": "ওসমান হাদির সাথে আমরা খোলামেলা কথা বলেছিলাম। এই বছরের সেপ্টেম্বরে। সেই কথা পুরো কাটছাট ছাড়া প্রকাশ করা হলো।  - What The Story\nOrginal channel link: https://www.youtube.com/watch?app=desktop&v=uAEhWV8XecU",
+            "views": 0,
+            "duration": "54.05"
+        },
+        {
             "id": "1",
             "youtubeId": "9I_y6_clyS4",
             "title": "The person can die, idea cannot die.",
@@ -18,8 +26,8 @@
         }
     ],
     "metadata": {
-        "lastUpdated": "2025-12-20",
-        "totalVideos": 2,
+        "lastUpdated": "2025-12-21",
+        "totalVideos": 3,
         "source": "YouTube Channel"
     }
 }
