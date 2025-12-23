@@ -1,6 +1,14 @@
 {
     "videos": [
         {
+            "id": "1766508873381",
+            "youtubeId": "mfkQUfp2NwE",
+            "title": "এনসিপির দুর্নীতির বিরুদ্ধে হাদি ভাইয়ের পরিষ্কার বক্তব্য",
+            "description": "",
+            "views": 0,
+            "duration": "07.00"
+        },
+        {
             "id": "1766333351794",
             "youtubeId": "uAEhWV8XecU",
             "title": "আনকাট হাদি: ওসমান হাদির অপ্রকাশিত সাক্ষাৎকার",
@@ -26,8 +34,8 @@
         }
     ],
     "metadata": {
-        "lastUpdated": "2025-12-21",
-        "totalVideos": 3,
+        "lastUpdated": "2025-12-23",
+        "totalVideos": 4,
         "source": "YouTube Channel"
     }
 }
