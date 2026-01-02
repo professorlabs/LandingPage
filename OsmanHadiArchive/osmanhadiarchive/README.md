@@ -1,1 +1,0 @@
-admin pass: osmanhadi2025
