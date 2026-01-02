@@ -1,0 +1,11 @@
+# robots.txt for professorlab.co
+# Allow all crawlers to index all pages
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://professorlab.co/sitemap.xml
+
+# Crawl delay (optional, helps prevent overloading)
+Crawl-delay: 1
